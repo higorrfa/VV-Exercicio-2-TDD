@@ -2,5 +2,5 @@ package funcionario;
 
 public interface Salario {
 
-    public double calcularSalarioLiquido(double valor);
+    public double calcularSalarioLiquido(double salarioBase);
 }
