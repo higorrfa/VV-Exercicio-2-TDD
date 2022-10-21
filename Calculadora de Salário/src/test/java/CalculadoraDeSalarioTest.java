@@ -1,5 +1,7 @@
 package test.java;
 
+
+import funcionario.*;
 import org.testng.annotations.Test;
 import org.junit.jupiter.api.Assertions;
 
