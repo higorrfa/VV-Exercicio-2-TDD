@@ -16,7 +16,13 @@ public enum Cargo implements Salario {
     }, TESTADOR {
         @Override
         public double calcularSalarioLiquido(double salarioBase) {
-            return 0;
+            double salarioLiquido;
+            if (salarioBase >= 2000) {
+                salarioLiquido = salarioBase - ((salarioBase * 25) / 100);
+            } else {
+                salarioLiquido = salarioBase - ((salarioBase * 15) / 100);
+            }
+            return salarioLiquido;
         }
     }, DESENVOLVEDOR {
         @Override
