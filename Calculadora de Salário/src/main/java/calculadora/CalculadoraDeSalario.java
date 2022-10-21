@@ -4,8 +4,8 @@ import funcionario.Funcionario;
 
 public class CalculadoraDeSalario {
 
-    public double calcularSalario(Funcionario funcionario) {
-        return 0.0;
+    public double calcularSalarioLiquido(Funcionario funcionario) {
+        return funcionario.calcularSalarioLiquido();
     }
 
 }

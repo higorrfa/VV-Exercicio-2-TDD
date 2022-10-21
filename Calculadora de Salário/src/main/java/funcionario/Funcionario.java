@@ -12,4 +12,8 @@ public class Funcionario {
         this.salarioBase = salarioBase;
         this.cargo = cargo;
     }
+
+    public double calcularSalarioLiquido() {
+        return this.cargo.calcularSalarioLiquido(this.salarioBase);
+    }
 }

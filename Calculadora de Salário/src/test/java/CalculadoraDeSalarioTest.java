@@ -13,6 +13,6 @@ public class CalculadoraDeSalarioTest {
     public void calculaSalarioDesenvolvedor() {
         double salarioBase = 5000.00;
         Funcionario funcionario = new Funcionario("Jose", "jose@email.com", salarioBase, Cargo.DESENVOLVEDOR);
-        Assertions.assertEquals(this.calculadora.calcularSalario(funcionario), 4000.00);
+        Assertions.assertEquals(this.calculadora.calcularSalarioLiquido(funcionario), 4000.00);
     }
 }
