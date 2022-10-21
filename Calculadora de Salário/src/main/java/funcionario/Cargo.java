@@ -24,7 +24,7 @@ public enum Cargo implements Salario {
             }
             return salarioLiquido;
         }
-    }, DESENVOLVEDOR {
+    }, GERENTE, DESENVOLVEDOR {
         @Override
         public double calcularSalarioLiquido(double salarioBase) {
             double salarioLiquido;
