@@ -1,7 +1,11 @@
 package funcionario;
 
-public enum Cargo {
+public enum Cargo implements Salario {
 
-    DESENVOLVEDOR;
-
+    DESENVOLVEDOR {
+        @Override
+        public double calcularSalarioLiquido(double valor) {
+            return 0;
+        }
+    }
 }
