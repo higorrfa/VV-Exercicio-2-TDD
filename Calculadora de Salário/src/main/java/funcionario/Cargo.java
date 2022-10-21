@@ -2,7 +2,7 @@ package funcionario;
 
 public enum Cargo implements Salario {
 
-    DESENVOLVEDOR {
+    DBA, DESENVOLVEDOR {
         @Override
         public double calcularSalarioLiquido(double salarioBase) {
             double salarioLiquido;
