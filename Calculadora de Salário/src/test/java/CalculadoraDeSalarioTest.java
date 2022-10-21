@@ -1,11 +1,13 @@
 package test.java;
 
-
+import calculadora.*;
 import funcionario.*;
 import org.testng.annotations.Test;
 import org.junit.jupiter.api.Assertions;
 
 public class CalculadoraDeSalarioTest {
+
+    CalculadoraDeSalario calculadora;
 
     @Test
     public void calculaSalarioDesenvolvedor() {
