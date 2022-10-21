@@ -18,9 +18,9 @@ public class CalculadoraDeSalarioTest {
 
     @Test
     public void calculaSalarioDBA() {
-        double salarioBase = 5000.00;
+        double salarioBase = 2000;
         Funcionario funcionario = new Funcionario("Marcos", "marcos@email.com", salarioBase, Cargo.DBA);
-        Assertions.assertEquals(this.calculadora.calcularSalarioLiquido(funcionario), 4000.00);
+        Assertions.assertEquals(this.calculadora.calcularSalarioLiquido(funcionario), 1500.00);
     }
 
 }
