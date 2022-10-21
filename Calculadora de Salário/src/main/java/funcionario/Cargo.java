@@ -13,7 +13,12 @@ public enum Cargo implements Salario {
             }
             return salarioLiquido;
         }
-    }, TESTADOR, DESENVOLVEDOR {
+    }, TESTADOR {
+        @Override
+        public double calcularSalarioLiquido(double salarioBase) {
+            return 0;
+        }
+    }, DESENVOLVEDOR {
         @Override
         public double calcularSalarioLiquido(double salarioBase) {
             double salarioLiquido;
