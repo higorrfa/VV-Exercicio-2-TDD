@@ -49,7 +49,16 @@ class FiltroDeFaturasTest {
 	@Test
     void verificaFaturasComValorMenorQueDoisMil() throws ParseException {
         String cliente = clienteController.verificaECriaCliente("Abedess", "11/05/2022", "Paraíba");
-        Fatura fatura = new Fatura("0982222", 1999, "09/06/2022", cliente);
+        Fatura fatura = new Fatura("0982222", 2500, "09/06/2022", cliente);
+        Fatura[] faturas = new Fatura[]{fatura};
+
+        Assertions.assertEquals(0, filtro.filtrarFaturas(faturas).size());
+    }
+	
+	@Test
+    public void verificaFaturasComValorEntreDoisMilEDoisMilEQuinhentosEDataMenorIgualQueUmMesAtras() throws ParseException {
+        String cliente = clienteController.verificaECriaCliente("Neymar", "11/05/2022", "Paraíba");
+        Fatura fatura = new Fatura("0982222444", 1999, "20/06/2022", cliente);
         Fatura[] faturas = new Fatura[]{fatura};
 
         Assertions.assertTrue(filtro.filtrarFaturas(faturas).size() == 0);
