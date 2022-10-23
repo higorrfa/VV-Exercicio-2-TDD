@@ -37,4 +37,13 @@ public class Fatura {
 	public void setData(Calendar data) {
 		this.data = data;
 	}
+
+	public void checaValor(double valor) {
+		if (valor < 0) {
+			throw new RuntimeException("Valor negativo!");
+		}
+		if (valor == null) {
+			throw new RuntimeException("Valor nulo!");
+		}
+	}
 }
