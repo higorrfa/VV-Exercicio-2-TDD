@@ -18,10 +18,14 @@ public class Filtro {
     public List<Fatura> filtrarFaturas(Fatura[] faturas) {
         List<Fatura> faturasAux = new ArrayList<>(Arrays.asList(faturas));
         for (Fatura fatura : faturas) {
+        	Cliente cliente = this.clienteController.getCliente(fatura.getCliente());
             if (fatura.getValor() < 2000) {
                 faturasAux.remove(fatura);
             }
             else if (fatura.getValor() >= 2000 && fatura.getValor() <= 2500 && comparaDiferencaDeTempo(fatura.getData()) <= 30) {
+            	faturasAux.remove(fatura);
+            }
+            else if (fatura.getValor() > 2500 && fatura.getValor() <= 3000 && comparaDiferencaDeTempo(cliente.getDataDeInclusao()) <= 60) {
             	faturasAux.remove(fatura);
             }
         }
@@ -39,6 +43,7 @@ public class Filtro {
         int dataDeHojeAux = dataDeHoje.get(Calendar.DAY_OF_YEAR);
         int dataFuturaAux = dataDeHoje.get(Calendar.DAY_OF_YEAR);
 
+        System.out.print(dataDeHojeAux - dataFuturaAux);
         return dataDeHojeAux - dataFuturaAux;
     }
 }
