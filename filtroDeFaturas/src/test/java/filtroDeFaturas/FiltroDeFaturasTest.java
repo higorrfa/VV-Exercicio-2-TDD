@@ -1,84 +1,73 @@
 package filtroDeFaturas;
 
-import java.text.ParseException;
-
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class FiltroDeFaturasTest {
-	
-    private ClienteController clienteController;
+import java.text.ParseException;
+
+import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+public class FiltroDeFaturasTest {
+
     private Filtro filtro;
-    
+    private ClienteController clienteController;
+
     @BeforeEach
     public void before() {
         this.clienteController = new ClienteController();
         this.filtro = new Filtro(clienteController);
     }
-	
-	@Test
-	void cadastrarClienteComDadosCorretos() throws ParseException {
-		Cliente cliente = new Cliente("Maicao", "10/05/2022", "Paraiba");
-		
-		Assertions.assertEquals(cliente.getNome(), "Maicao");
-        Assertions.assertEquals(cliente.getEstado(), "Paraiba");
-	}
-	
-	@Test
+
+    @Test
+    void cadastrarClienteComDadosCorretos() throws ParseException {
+        Cliente client = new Cliente("Abedess", "19/07/2022", "Paraiba");
+
+        assertEquals("Abedess", client.getNome());
+        assertEquals("Paraiba", client.getEstado());
+    }
+
+    @Test
     void criarFaturaComDadosCorretos() throws ParseException {
-		String cliente = clienteController.verificaECriaCliente("Eli", "03/02/2022", "Rio Grande do Norte");
-		Fatura fatura = new Fatura("4442", 1900, "10/05/2022", cliente);
+        String cliente = clienteController.verificaECriaCliente("Abedess", "19/07/2022", "Paraiba");
+        Fatura fatura = new Fatura(550, "20/10/2022", cliente);
 
-        Assertions.assertEquals(fatura.getValor(), 1900);
-        Assertions.assertEquals(fatura.getCodigo(), "4442");
+        assertEquals(cliente, fatura.getCliente());
     }
-	
-	@Test
-	void criarFaturaComValorNegativo() throws ParseException{
-		String cliente = clienteController.verificaECriaCliente("Angelo", "03/02/2022", "Rio Grande do Norte");
-		Fatura fatura = new Fatura("44432", -500, "10/05/2022", cliente);
 
-		try {
-			fatura.checaValor(fatura.getValor());
-		} catch (RuntimeException e) {
-			Assertions.assertEquals("Valor negativo!", e.getMessage());
-		}
-    }
-	
-	@Test
+    @Test
     void verificaFaturasComValorMenorQueDoisMil() throws ParseException {
-        String cliente = clienteController.verificaECriaCliente("Abedess", "19/03/2022", "Paraíba");
-        Fatura fatura = new Fatura("0982222", 1999, "20/10/2000", cliente);
+        String cliente = clienteController.verificaECriaCliente("Abedess", "19/07/2022", "Paraiba");
+        Fatura fatura = new Fatura(1999, "20/10/2022", cliente);
         Fatura[] faturas = new Fatura[]{fatura};
 
-        Assertions.assertEquals(0, filtro.filtrarFaturas(faturas).size());
+        assertTrue(filtro.filtrarFaturas(faturas).size() == 0);
     }
-	
-	@Test
-    public void verificaFaturasComValorEntreDoisMilEDoisMilEQuinhentosEDataMenorIgualQueUmMesAtras() throws ParseException {
-        String cliente = clienteController.verificaECriaCliente("Neymar", "20/05/2022", "Paraíba");
-        Fatura fatura = new Fatura("0982222444", 2100.00, "01/10/2022", cliente);
+
+    @Test
+    void verificaFaturasComValorEntreDoisMilEDoisMilEQuinhentosEDataMenorIgualQueUmMesAtras() throws ParseException {
+        String cliente = clienteController.verificaECriaCliente("Abedess", "19/07/2022", "Paraiba");
+        Fatura fatura = new Fatura(2100, "01/10/2022", cliente);
         Fatura[] faturas = new Fatura[]{fatura};
 
-        Assertions.assertTrue(filtro.filtrarFaturas(faturas).size() == 0);
+        assertEquals(0, filtro.filtrarFaturas(faturas).size());
     }
-	
-	@Test
-    public void verificaFaturasComValorEntreDoisMilEQuinhentosETresMilEDataMenorIgualQueDoisMesesAtras() throws ParseException {
-		String cliente = clienteController.verificaECriaCliente("NeymarPai", "10/09/2022", "Paraíba");
-        Fatura fatura = new Fatura("0982222444", 2699, "20/10/2022", cliente);
+
+    @Test
+    void verificaFaturasComValorEntreDoisMilEQuinhentosETresMilEDataMenorIgualQueDoisMesesAtras() throws ParseException {
+        String cliente = clienteController.verificaECriaCliente("Abedess", "19/09/2022", "Paraiba");
+        Fatura fatura = new Fatura(2900, "22/10/2022", cliente);
         Fatura[] faturas = new Fatura[]{fatura};
 
-        Assertions.assertTrue(filtro.filtrarFaturas(faturas).size() == 0);
+        assertTrue(filtro.filtrarFaturas(faturas).size() == 0);
     }
-	
-	@Test
-    public void verificaFaturasComValorMaiorQueQuatroMilDoSulDoBrasil() throws ParseException {
-		String cliente = clienteController.verificaECriaCliente("NeymarPai", "10/09/2022", "Rio Grande do Sul");
-        Fatura fatura = new Fatura("0982222444", 4500, "20/10/2022", cliente);
+
+    @Test
+    void verificaFaturasComValorMaiorQueQuatroMilDoSulDoBrasil() throws ParseException {
+        String cliente = clienteController.verificaECriaCliente("Abedess", "19/09/2022", "Santa Catarina");
+        Fatura fatura = new Fatura(4500, "22/10/2022", cliente);
         Fatura[] faturas = new Fatura[]{fatura};
 
-        Assertions.assertTrue(filtro.filtrarFaturas(faturas).size() == 0);
+        assertEquals(0, filtro.filtrarFaturas(faturas).size());
     }
 }
