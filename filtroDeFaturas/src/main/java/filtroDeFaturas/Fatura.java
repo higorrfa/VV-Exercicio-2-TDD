@@ -1,17 +1,20 @@
 package filtroDeFaturas;
 
-import java.util.Calendar;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Fatura {
 	
 	private String codigo;
     private double valor;
-    private Calendar data;
+    private Date data;
 
-	public Fatura(String codigo, double valor, Calendar data) {
+	public Fatura(String codigo, double valor, String data) throws ParseException {
+		SimpleDateFormat formataData = new SimpleDateFormat("dd/MM/yyyy");
 		this.codigo = codigo;
         this.valor = valor;
-        this.data = data;
+        this.data = formataData.parse(data);
 	}
 
 	public String getCodigo() {
@@ -30,20 +33,18 @@ public class Fatura {
 		this.valor = valor;
 	}
 
-	public Calendar getData() {
+	public Date getData() {
 		return data;
 	}
 
-	public void setData(Calendar data) {
+	public void setData(Date data) {
 		this.data = data;
 	}
-
-	public void checaValor(double valor) {
+	
+	public double checaValor(double valor) {
 		if (valor < 0) {
 			throw new RuntimeException("Valor negativo!");
 		}
-		if (valor == null) {
-			throw new RuntimeException("Valor nulo!");
-		}
+		return valor;
 	}
 }
