@@ -48,8 +48,8 @@ class FiltroDeFaturasTest {
 	
 	@Test
     void verificaFaturasComValorMenorQueDoisMil() throws ParseException {
-        String cliente = clienteController.verificaECriaCliente("Abedess", "11/05/2022", "Paraíba");
-        Fatura fatura = new Fatura("0982222", 2500, "09/06/2022", cliente);
+        String cliente = clienteController.verificaECriaCliente("Abedess", "19/03/2022", "Paraíba");
+        Fatura fatura = new Fatura("0982222", 1999, "20/10/2000", cliente);
         Fatura[] faturas = new Fatura[]{fatura};
 
         Assertions.assertEquals(0, filtro.filtrarFaturas(faturas).size());
@@ -57,8 +57,26 @@ class FiltroDeFaturasTest {
 	
 	@Test
     public void verificaFaturasComValorEntreDoisMilEDoisMilEQuinhentosEDataMenorIgualQueUmMesAtras() throws ParseException {
-        String cliente = clienteController.verificaECriaCliente("Neymar", "11/05/2022", "Paraíba");
-        Fatura fatura = new Fatura("0982222444", 1999, "20/06/2022", cliente);
+        String cliente = clienteController.verificaECriaCliente("Neymar", "20/05/2022", "Paraíba");
+        Fatura fatura = new Fatura("0982222444", 2100.00, "01/10/2022", cliente);
+        Fatura[] faturas = new Fatura[]{fatura};
+
+        Assertions.assertTrue(filtro.filtrarFaturas(faturas).size() == 0);
+    }
+	
+	@Test
+    public void verificaFaturasComValorEntreDoisMilEQuinhentosETresMilEDataMenorIgualQueDoisMesesAtras() throws ParseException {
+		String cliente = clienteController.verificaECriaCliente("NeymarPai", "10/09/2022", "Paraíba");
+        Fatura fatura = new Fatura("0982222444", 2699, "20/10/2022", cliente);
+        Fatura[] faturas = new Fatura[]{fatura};
+
+        Assertions.assertTrue(filtro.filtrarFaturas(faturas).size() == 0);
+    }
+	
+	@Test
+    public void verificaFaturasComValorMaiorQueQuatroMilDoSulDoBrasil() throws ParseException {
+		String cliente = clienteController.verificaECriaCliente("NeymarPai", "10/09/2022", "Rio Grande do Sul");
+        Fatura fatura = new Fatura("0982222444", 4500, "20/10/2022", cliente);
         Fatura[] faturas = new Fatura[]{fatura};
 
         Assertions.assertTrue(filtro.filtrarFaturas(faturas).size() == 0);
