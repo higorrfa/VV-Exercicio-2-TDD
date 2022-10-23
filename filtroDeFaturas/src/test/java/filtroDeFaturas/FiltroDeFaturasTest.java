@@ -8,12 +8,13 @@ import org.junit.jupiter.api.Test;
 
 class FiltroDeFaturasTest {
 	
-	
     private ClienteController clienteController;
+    private Filtro filtro;
     
     @BeforeEach
     public void before() {
         this.clienteController = new ClienteController();
+        this.filtro = new Filtro(clienteController);
     }
 	
 	@Test
@@ -26,7 +27,7 @@ class FiltroDeFaturasTest {
 	
 	@Test
     void criarFaturaComDadosCorretos() throws ParseException {
-		String cliente = clienteController.VerificaECriaCliente("Eli", "03/02/2022", "Rio Grande do Norte");
+		String cliente = clienteController.verificaECriaCliente("Eli", "03/02/2022", "Rio Grande do Norte");
 		Fatura fatura = new Fatura("4442", 1900, "10/05/2022", cliente);
 
         Assertions.assertEquals(fatura.getValor(), 1900);
@@ -35,7 +36,7 @@ class FiltroDeFaturasTest {
 	
 	@Test
 	void criarFaturaComValorNegativo() throws ParseException{
-		String cliente = clienteController.VerificaECriaCliente("Angelo", "03/02/2022", "Rio Grande do Norte");
+		String cliente = clienteController.verificaECriaCliente("Angelo", "03/02/2022", "Rio Grande do Norte");
 		Fatura fatura = new Fatura("44432", -500, "10/05/2022", cliente);
 
 		try {
@@ -43,5 +44,14 @@ class FiltroDeFaturasTest {
 		} catch (RuntimeException e) {
 			Assertions.assertEquals("Valor negativo!", e.getMessage());
 		}
+    }
+	
+	@Test
+    void verificaFaturasComValorMenorQueDoisMil() throws ParseException {
+        String cliente = clienteController.verificaECriaCliente("Abedess", "11/05/2022", "Paraíba");
+        Fatura fatura = new Fatura("0982222", 1999, "09/06/2022", cliente);
+        Fatura[] faturas = new Fatura[]{fatura};
+
+        Assertions.assertTrue(filtro.filtrarFaturas(faturas).size() == 0);
     }
 }

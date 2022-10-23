@@ -12,7 +12,7 @@ public class ClienteController {
         this.clientes = new HashMap<>();
     }
 	
-	public String VerificaECriaCliente(String nome, String dataDeInclusao, String estado) {
+	public String verificaECriaCliente(String nome, String dataDeInclusao, String estado) {
         try {
             Cliente cliente = new Cliente(nome, dataDeInclusao, estado);
             this.clientes.put(cliente.getGuid(), cliente);
