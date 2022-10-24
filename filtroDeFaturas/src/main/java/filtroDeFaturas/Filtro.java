@@ -1,49 +1,55 @@
 package filtroDeFaturas;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.List;
+import java.util.*;
 
 public class Filtro {
-	
-	private ClienteController clienteController;
+
+    private ClienteController clienteController;
 
     public Filtro(ClienteController clienteController) {
         this.clienteController = clienteController;
     }
 
     public List<Fatura> filtrarFaturas(Fatura[] faturas) {
-        List<Fatura> faturasAux = new ArrayList<>(Arrays.asList(faturas));
+        List<Fatura> listaAux = new ArrayList<>(Arrays.asList(faturas));
         for (Fatura fatura : faturas) {
-        	Cliente cliente = this.clienteController.getCliente(fatura.getCliente());
+            Cliente cliente = this.clienteController.getCliente(fatura.getCliente());
             if (fatura.getValor() < 2000) {
-                faturasAux.remove(fatura);
-            }
-            else if (fatura.getValor() >= 2000 && fatura.getValor() <= 2500 && comparaDiferencaDeTempo(fatura.getData()) <= 30) {
-            	faturasAux.remove(fatura);
-            }
-            else if (fatura.getValor() > 2500 && fatura.getValor() <= 3000 && comparaDiferencaDeTempo(cliente.getDataDeInclusao()) <= 60) {
-            	faturasAux.remove(fatura);
+                listaAux.remove(fatura);
+            } else if (fatura.getValor() >= 2000 && fatura.getValor() <= 2500 && comparaDiferencaDeTempo(fatura.getData()) <= 30) {
+                listaAux.remove(fatura);
+            } else if (fatura.getValor() > 2500 && fatura.getValor() <= 3000 && comparaDiferencaDeTempo(cliente.getDataDeInclusao()) <= 60) {
+                listaAux.remove(fatura);
+            } else if (fatura.getValor() > 4000 && verificaRegiao(cliente.getEstado()).equals("Sul")) {
+                listaAux.remove(fatura);
             }
         }
-        return faturasAux;
+        return listaAux;
     }
 
     private double comparaDiferencaDeTempo(Date data) {
         Date hoje = new Date();
         GregorianCalendar dataDeHoje = new GregorianCalendar();
-        GregorianCalendar dataFutura = new GregorianCalendar();
+        GregorianCalendar dataAComparar = new GregorianCalendar();
 
         dataDeHoje.setTime(hoje);
-        dataFutura.setTime(data);
+        dataAComparar.setTime(data);
 
-        int dataDeHojeAux = dataDeHoje.get(Calendar.DAY_OF_YEAR);
-        int dataFuturaAux = dataDeHoje.get(Calendar.DAY_OF_YEAR);
+        int diaHoje = dataDeHoje.get(Calendar.DAY_OF_YEAR);
+        int diaData = dataAComparar.get(Calendar.DAY_OF_YEAR);
 
-        System.out.print(dataDeHojeAux - dataFuturaAux);
-        return dataDeHojeAux - dataFuturaAux;
+        return diaHoje - diaData;
+    }
+
+    private String verificaRegiao(String estado) {
+        List<String> regiaoSul = new ArrayList<String>();
+
+        regiaoSul.addAll(List.of(new String[]{"parana", "rio grande do sul", "santa catarina"}));
+
+
+        if (regiaoSul.contains(estado.toLowerCase())) {
+            return "Sul";
+        } else {
+            return "";
+        }
     }
 }
