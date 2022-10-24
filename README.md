@@ -1,6 +1,6 @@
-<h1 align="center">
-<br> V&V - Execício 2 - Aplicando TDD
-</h1>
+# V&V - Execício 2 - Aplicando TDD
+
+Exercício 2 da disciplina Verificação e Validação de Software: Praticando TDD.
 
 # Experiência com TDD
 
